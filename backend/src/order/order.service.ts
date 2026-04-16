@@ -30,6 +30,10 @@ export class OrderService {
       return filmCache[filmId];
     };
 
+    const newTakenMap = new Map<string, Set<string>>();
+
+    const items: CreatedTicketDto[] = [];
+
     for (const ticket of tickets) {
       const film = await getFilm(ticket.film);
       if (!film) {
@@ -44,44 +48,39 @@ export class OrderService {
       }
 
       const seatKey = `${ticket.row}:${ticket.seat}`;
+
       if (session.taken.includes(seatKey)) {
         throw new BadRequestException(
           `Seat ${seatKey} is already taken in session "${ticket.session}"`,
         );
       }
-    }
 
-    const takenMap = new Map<string, string[]>();
-    const items: CreatedTicketDto[] = [];
-
-    for (const ticket of tickets) {
-      const film = await getFilm(ticket.film);
-      const session = film!.schedule.find((s) => s.id === ticket.session)!;
-
-      const cacheKey = `${ticket.film}::${ticket.session}`;
-      if (!takenMap.has(cacheKey)) {
-        takenMap.set(cacheKey, [...session.taken]);
+      if (!newTakenMap.has(ticket.session)) {
+        newTakenMap.set(ticket.session, new Set());
       }
+      const newSeats = newTakenMap.get(ticket.session)!;
 
-      const currentTaken = takenMap.get(cacheKey)!;
-      const seatKey = `${ticket.row}:${ticket.seat}`;
-
-      if (currentTaken.includes(seatKey)) {
+      if (newSeats.has(seatKey)) {
         throw new BadRequestException(
-          `Seat ${seatKey} is already taken in session "${ticket.session}"`,
+          `Duplicate seat ${seatKey} in session "${ticket.session}"`,
         );
       }
 
-      currentTaken.push(seatKey);
-      takenMap.set(cacheKey, currentTaken);
+      newSeats.add(seatKey);
+      items.push({ ...ticket, id: randomUUID() });
+    }
+
+    for (const [sessionId, newSeats] of newTakenMap.entries()) {
+      const filmId = tickets.find((t) => t.session === sessionId)!.film;
+      const film = await getFilm(filmId);
+      const session = film!.schedule.find((s) => s.id === sessionId)!;
+      const updatedTaken = [...session.taken, ...newSeats];
 
       await this.filmsRepository.updateScheduleTaken(
-        ticket.film,
-        ticket.session,
-        currentTaken,
+        filmId,
+        sessionId,
+        updatedTaken,
       );
-
-      items.push({ ...ticket, id: randomUUID() });
     }
 
     return { total: items.length, items };
