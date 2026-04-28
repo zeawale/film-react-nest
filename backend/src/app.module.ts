@@ -25,7 +25,7 @@ import { Schedule } from './repository/schedule.entity';
             type: 'postgres',
             url,
             entities: [Film, Schedule],
-            synchronize: false,
+            synchronize: process.env.NODE_ENV !== 'production',
           };
         }
         return {
@@ -36,7 +36,7 @@ import { Schedule } from './repository/schedule.entity';
           username: configService.get<string>('DATABASE_USERNAME'),
           password: configService.get<string>('DATABASE_PASSWORD'),
           entities: [Film, Schedule],
-          synchronize: false,
+          synchronize: process.env.NODE_ENV !== 'production',
         };
       },
       inject: [ConfigService],
