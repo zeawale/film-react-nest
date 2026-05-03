@@ -6,8 +6,8 @@ import {
   FilmsResponseDto,
   ScheduleDto,
 } from './dto/films.dto';
-import { Film } from '../repository/film.schema';
-import { Schedule } from '../repository/schedule.schema';
+import { Film } from '../repository/film.entity';
+import { Schedule } from '../repository/schedule.entity';
 
 @Injectable()
 export class FilmsService {
