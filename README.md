@@ -1,5 +1,7 @@
 # FILM!
 
+**Ссылка на работающее приложение:** http://zeawale-film.nomorepartiessite.ru/
+
 ## Установка
 
 ### MongoDB
