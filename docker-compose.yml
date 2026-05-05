@@ -43,7 +43,7 @@ services:
     restart: unless-stopped
     environment:
       DATABASE_DRIVER: postgres
-      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
       PORT: ${PORT}
       NODE_ENV: ${NODE_ENV}
       LOGGER_TYPE: ${LOGGER_TYPE}
