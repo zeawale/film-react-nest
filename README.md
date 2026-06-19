@@ -1,36 +1,64 @@
-# FILM!
+<div align="center">
 
-## Установка
+# film-react-nest 🎬
 
-### MongoDB
+### Film Catalog · Fullstack App
 
-Установите MongoDB скачав дистрибутив с официального сайта или с помощью пакетного менеджера вашей ОС. Также можно воспользоваться Docker (см. ветку `feat/docker`.
+*browse and discover films — from database to UI, full stack*
 
-Выполните скрипт `test/mongodb_initial_stub.js` в консоли `mongo`.
+![TypeScript](https://img.shields.io/badge/TypeScript-1e1e2e?style=for-the-badge&logo=typescript&logoColor=a6e3a1)
+![React](https://img.shields.io/badge/React-1e1e2e?style=for-the-badge&logo=react&logoColor=a6e3a1)
+![NestJS](https://img.shields.io/badge/NestJS-1e1e2e?style=for-the-badge&logo=nestjs&logoColor=a6e3a1)
+![MongoDB](https://img.shields.io/badge/MongoDB-1e1e2e?style=for-the-badge&logo=mongodb&logoColor=a6e3a1)
 
-### Бэкенд
+</div>
 
-Перейдите в папку с исходным кодом бэкенда
+---
 
-`cd backend`
+## 📋 about
 
-Установите зависимости (точно такие же, как в package-lock.json) помощью команд
+A fullstack film catalog application. React frontend communicates with a NestJS REST API backed by MongoDB.
 
-`npm ci` или `yarn install --frozen-lockfile`
+<!-- Add a screenshot or GIF here -->
+<!-- ![demo](link-to-screenshot) -->
 
-Создайте `.env` файл из примера `.env.example`, в нём укажите:
+## 🛠️ tech stack
 
-* `DATABASE_DRIVER` - тип драйвера СУБД - в нашем случае это `mongodb` 
-* `DATABASE_URL` - адрес СУБД MongoDB, например `mongodb://127.0.0.1:27017/practicum`.  
+**Frontend**
+- React + TypeScript
+- REST API integration
 
-MongoDB должна быть установлена и запущена.
+**Backend**
+- NestJS + TypeScript
+- MongoDB + Mongoose
+- REST API
 
-Запустите бэкенд:
+## 🚀 getting started
 
-`npm start:debug`
+**Backend:**
 
-Для проверки отправьте тестовый запрос с помощью Postman или `curl`.
+```bash
+cd backend
+cp .env.example .env
+# set DATABASE_DRIVER=mongodb and DATABASE_URL in .env
 
+npm ci
+npm run start:debug
+```
 
+**Frontend:**
 
+```bash
+cd frontend
+npm ci
+npm start
+```
 
+> MongoDB must be running before starting the backend.
+> Seed the DB: run `test/mongodb_initial_stub.js` in mongo console.
+
+---
+
+<div align="center">
+<sub>Yandex Practicum · Fullstack Developer</sub>
+</div>
